@@ -1,0 +1,236 @@
+<html>
+    <head>
+        <title>vue test</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+             {{message}}
+            <span v-bind:title="spanTitle">I am a span</span>
+            <img v-bind:src="imgSrc" v-bind:alt="imgAlt">
+            <div v-if="isIf === 1">
+                 if isIf === 1 show: {{isIf}}
+            </div>
+            <div v-else-if="isIf === 2">
+                if isIf === 2 show: {{isIf}}
+            </div>
+            <div v-else>
+                if isIf !== 1 || isIf !== 2 show: {{isIf}}
+            </div>
+            <div v-show="isShow">
+                if isShow === true show: {{isShow}}
+            </div> 
+            
+            <ul>
+                <li v-for="(item, index) in items" v-if="item.isShow" v-bind:key="index">
+                    <p>{{index}}</p>
+                    <p>{{item.name}}</p>
+                    <p>${{item.price}}</p>
+                </li>
+            </ul>
+            <ul>
+                    <li v-for="(value, key, index) in dataSource" v-bind:key="index">
+                      <p>
+                            {{ index }}. {{ key }}: {{ value }}
+                      </p>
+                    </li>
+                </ul>
+                <p :title="testTitle1Key + ' - ' + testTitle1Key">testTitle</p>
+                <p :title="testTitle3Key - testTitle4Key">testTitle2</p>
+                <p :title="testObj">testObj</p>
+                <p :title="testArr">testArr</p>
+                <p :title="testMethod()">testMethod</p>
+                <p class="test" :class="{'red' : isActive, 'big-font': isBig}">test1</p>
+               
+                <p class="test" :class="testClassObject">test2</p>
+               
+                <p class="test" :class="[classBlue, bigFont]">test3</p>
+              
+                <p class="test" :class="[isBlue ? classBlue : classYellow]">test4</p>
+              
+                <p class="test" :class="[{classBlue : isBlue}, testClassObject]">test5</p>
+           
+                <p style="font-weight: bold" :style="isActive ? 'color: red' : 'color: blue'">test6</p>
+                
+                <p style="font-weight: bold" :style="{color: styleRedColor, fontSize: styleFontSize + 'px', 'font-weight': styleFontLighter}">test7</p>
+                
+                <p style="font-weight: bold" :style="testStyle">test8</p>
+          
+                <input type="text" v-model="intputMessage">
+      <p>{{intputMessage}}</p>
+      <br>
+
+      <textarea v-model="textareaMessage"></textarea>
+      <p>{{textareaMessage}}</p>
+      <br>
+
+      <div>
+        <input type="checkbox" id="android" value="android" v-model="checkedMessage">
+        <label for="android">android</label>
+        <input type="checkbox" id="ios" value="ios" v-model="checkedMessage">
+        <label for="ios">ios</label>
+        <input type="checkbox" id="javaScript" value="javaScript" v-model="checkedMessage">
+        <label for="javaScript">javaScript</label>
+        <br>
+        <p>checked  message: {{ checkedMessage }}</p>
+      </div>
+      <br>
+
+      <div>
+        <input type="radio" id="javaScript" value="javaScript" name="testRadio" v-model="radioMessage">
+        <label for="javaScript">javaScript</label>
+        <br>
+        <input type="radio" id="Vue" value="Vue" name="testRadio" v-model="radioMessage">
+        <label for="Vue">Vue</label>
+        <br>
+        <p>radio message: {{ radioMessage }}</p>
+      </div>
+      <br>
+
+      <select v-model="selectedMessage" multiple  style="width: 100px;">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <br>
+      <span>selected  message: {{ selectedMessage }}</span>
+      <br>
+      <input v-model.lazy="testlazy" >
+        <p>{{testlazy}}</p>
+        <br>
+
+        <input v-model.number="testnumber" type="number">
+        <p>{{testnumber}}</p>
+        <br>
+
+        <input v-model.trim="testTrim">
+        <p>{{testTrim}}</p>
+
+        <div>
+            <button @click.once="count += 1">count += 1</button>
+            <p>count: {{count}}</p>
+        </div>
+        <br>
+
+        <div>
+            <button @click="testOnClickMethods">testOnClickMethods</button>
+    </div>
+    <br>
+
+    <div>
+        <button @click.once="onSumClick(1, 2)">onSumClick</button>
+</div>
+<br>
+
+<div>
+    <input type="text" @keyup="onChange"  v-model="inputMsg"></input>
+</div>
+
+        </div>
+        <script>
+         var app = new Vue({
+             el: '#app',
+             data: {
+                  message:'Hello Vue from Ping!',
+                 spanTitle: 'I am the title of span.',
+                 imgAlt:'I am a img',
+                 imgSrc: 'https://avatar.csdn.net/6/F/4/3_u011068996.jpg',
+                 isIf: 2,
+                 isShow: true, 
+                 items:[
+                     {
+                         name: 'android',
+                         price: '12.00',
+                         isShow: false
+                     },
+                     {
+                         name: 'js',
+                         price:'13.00',
+                         isShow: true
+                     },
+                     {
+                         name: 'C#',
+                         price: '15.00',
+                         isShow: true
+                     }
+                 ],
+                 dataSource: {
+              name: 'Vue',
+              price: '12.99',
+              type: 'javaScript',
+              
+          },
+          testTitle1Key: 'testTitle1Value',
+          testTitle2Key: 'testTitle2Value',
+          testTitle3Key: 3,
+          testTitle4Key: 2,
+          testObj: {
+            name: 'testObj'
+          },
+          testArr: ['1', '2', '3'],
+          testMethod: function () {
+            var result = 1 + 1;
+            return '1 + 1 = ' + result;
+          },
+          isActive: true,
+          isBig: false,
+          testClassObject: {
+            blue: true,
+            'big-font': true
+          },
+          classBlue: 'blue',
+          classYellow: 'yellow',
+          isBlue: false,
+          bigFont: 'big-font',
+          styleRedColor: 'red',
+          styleFontSize: 18,
+          styleFontLighter: 'lighter',
+          testStyle: {
+            color: 'red',
+            fontSize: '18px',
+            'font-weight': 'lighter',
+            display: ['-webkit-box', '-ms-flexbox', 'flex']
+          },
+          intputMessage: 'default input',
+          textareaMessage: 'default textarea',
+          checkedMessage: [],
+          radioMessage: '',
+          selectedMessage: [],
+          testlazy: '',
+            testnumber: '',
+            testTrim: '',
+            count: 0,
+                inputMsg: ''
+
+
+
+
+
+          
+             },
+             methods: {
+                testOnClickMethods: function (event) {
+                    alert('Hello Vue');
+
+                    if (event) {
+                        alert(event.target.tagName);
+                    }
+                },
+
+ onSumClick: function (s1, s2) {
+                    alert(s1 + s2);
+                },
+                onChange: function () {
+                    console.log(this.inputMsg);
+                }
+
+}
+         })
+        </script>
+    </body>
+</html>
